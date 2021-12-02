@@ -13,7 +13,7 @@ const App = () => {
   return (
     <div className="App">
       <h1>Hello, world!</h1>
-      <List coinList={coinData.coinList || []} />
+      <List isShowWallet={coinData.isShowWallet} coinList={coinData.coinList || []} />
       <div>{coinData.subtotal}</div>
     </div>
   );

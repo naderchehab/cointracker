@@ -2,9 +2,9 @@ import React from 'react';
 
 const List = (props) => {
   return (
-    <table>
+    <table className="rtable">
       <tr>
-        <th>Wallet</th>
+        {props.isShowWallet && <th>Wallet</th>}
         <th>Coin</th>
         <th>Quantity</th>
         <th>Price</th>
@@ -12,7 +12,7 @@ const List = (props) => {
       </tr>
       {props.coinList.map(coin =>
       <tr>
-        <td>{coin.wallet}</td>
+        {props.isShowWallet && <td>{coin.wallet}</td>}
         <td>{coin.coin}</td>
         <td>{coin.qty}</td>
         <td>{coin.price}</td>

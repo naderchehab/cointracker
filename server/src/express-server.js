@@ -5,6 +5,7 @@ import { getCoinList, getSubtotal } from './utils'
 const coins = require("../../config/coins.json").coins
 const coinString = coins.map(coin => coin.coin).join(",")
 const USE_MOCK = true
+const IS_SHOW_WALLET = true
 
 const startExpressServer = (port) => {
   const app = express();
@@ -23,10 +24,10 @@ const startExpressServer = (port) => {
         });
         data = response.data;
       }
-      const coinList = getCoinList(coins, data, false)
+      const coinList = getCoinList(coins, data, IS_SHOW_WALLET)
       coinList.sort((a, b) => b.total - a.total)
       const subtotal = getSubtotal(coinList)
-      const resp = { coinList, subtotal, data }
+      const resp = { coinList, subtotal, isShowWallet: IS_SHOW_WALLET, data }
       res.json(resp);
     } catch (err) {
       console.error(err);
