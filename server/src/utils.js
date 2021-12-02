@@ -40,6 +40,7 @@ function getSubtotal(coinList) {
         acc += coin.total
         return acc
     }, 0)
+    return subtotal
 }
 
 export {

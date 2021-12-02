@@ -4,8 +4,8 @@ import { getCoinList, getSubtotal } from './utils'
 
 const coins = require("../../config/coins.json").coins
 const coinString = coins.map(coin => coin.coin).join(",")
-const USE_MOCK = true
-const IS_SHOW_WALLET = true
+const USE_MOCK = false
+const IS_SHOW_WALLET = false
 
 const startExpressServer = (port) => {
   const app = express();
