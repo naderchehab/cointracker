@@ -1,21 +1,33 @@
 import express from "express";
 import axios from "axios";
+import { getCoinList, getSubtotal } from './utils'
+
+const coins = require("../../config/coins.json").coins
+const coinString = coins.map(coin => coin.coin).join(",")
+const USE_MOCK = true
 
 const startExpressServer = (port) => {
   const app = express();
   app.use(express.static('build'));
-  
+
   app.get("/data", async (req, res) => {
     try {
-      
-      const data = await axios({
-        method: 'GET',
-        url: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC,ETH',
-        headers: {
-          "X-CMC_PRO_API_KEY": require("../../keys.json").coinmarketcap_key
-        }
-      });
-      res.json({ msg: data.data });
+      let data = require("../../mock.json")
+      if (!USE_MOCK) {
+        const response = await axios({
+          method: 'GET',
+          url: `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${coinString}`,
+          headers: {
+            "X-CMC_PRO_API_KEY": require("../../config/keys.json").coinmarketcap_key
+          }
+        });
+        data = response.data;
+      }
+      const coinList = getCoinList(coins, data, false)
+      coinList.sort((a, b) => b.total - a.total)
+      const subtotal = getSubtotal(coinList)
+      const resp = { coinList, subtotal, data }
+      res.json(resp);
     } catch (err) {
       console.error(err);
       res.json(err);

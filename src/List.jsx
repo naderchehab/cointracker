@@ -1,19 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-const List = () => {
-  const [data, setData] = useState([]);
-  
-  useEffect(async () => {
-    const response = await fetch('/data')
-    const data = await response.json()
-    setData(data)
-    console.log(data)
-  }, [])
-
+const List = (props) => {
   return (
-    <div>
-      {JSON.stringify(data)}
-    </div>
+    <table>
+      <tr>
+        <th>Wallet</th>
+        <th>Coin</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+      </tr>
+      {props.coinList.map(coin =>
+      <tr>
+        <td>{coin.wallet}</td>
+        <td>{coin.coin}</td>
+        <td>{coin.qty}</td>
+        <td>{coin.price}</td>
+        <td>{coin.total}</td>
+      </tr>
+    )}
+    </table>
   )
 }
 
