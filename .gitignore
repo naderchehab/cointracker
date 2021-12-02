@@ -2,3 +2,4 @@ hosts.json
 dnsCache.json
 whoisCache.json
 node_modules
+keys.json

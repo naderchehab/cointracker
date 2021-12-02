@@ -1,4 +1,5 @@
 import express from "express";
+import axios from "axios";
 
 const startExpressServer = (port) => {
   const app = express();
@@ -6,9 +7,17 @@ const startExpressServer = (port) => {
   
   app.get("/data", async (req, res) => {
     try {
-      res.json({ msg: "hi" });
+      
+      const data = await axios({
+        method: 'GET',
+        url: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC,ETH',
+        headers: {
+          "X-CMC_PRO_API_KEY": require("../../keys.json").coinmarketcap_key
+        }
+      });
+      res.json({ msg: data.data });
     } catch (err) {
-      console.err(err);
+      console.error(err);
       res.json(err);
     }
   });
